@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useDraggable } from "@dnd-kit/core";
-import useTasks from "../../hooks/useTasks";
+import {memo} from "react";
+
 
 const Card = styled.div`
   background: white;
@@ -16,10 +17,8 @@ const Card = styled.div`
 
 import { useRef } from "react";
 
-const TaskCard = ({ task }) => {
-  const { state, dispatch } = useTasks();
-  // const isDraggingRef = useRef(false);
-  // const isLoading = state.loadingTasks[task.id];
+const TaskCard = ({ task, onSelect }) => {
+
 
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task.id,
@@ -38,9 +37,7 @@ const TaskCard = ({ task }) => {
       style={style}
       {...attributes}
       {...listeners}
-      onClick={() => {
-        dispatch({ type: "SELECT_TASK", payload: task });
-      }}
+      onClick={() => onSelect && onSelect(task)}
     >
       <h4>{task.title}</h4>
       <p>{task.description}</p>
@@ -50,4 +47,4 @@ const TaskCard = ({ task }) => {
     </Card>
   );
 };
-export default TaskCard;
+export default memo(TaskCard);

@@ -1,4 +1,4 @@
-import React from "react";
+import {memo, useCallback} from "react";
 import { Column, ColumnTitle } from "./TaskDashBoard";
 import useTasks from "../../hooks/useTasks";
 import { useDroppable } from "@dnd-kit/core";
@@ -11,6 +11,14 @@ const TaskColumn = ({ title, tasks, columnKey }) => {
     id: columnKey,
   });
 
+  const onSelect = useCallback(
+    (task) => {
+      dispatch({ type: "SELECT_TASK", payload: task });
+    },
+    [dispatch]
+  );
+
+
   return (
     <Column ref={setNodeRef}>
       <ColumnTitle>{title}</ColumnTitle>
@@ -18,10 +26,11 @@ const TaskColumn = ({ title, tasks, columnKey }) => {
       {tasks.length === 0 ? (
         <p>No tasks</p>
       ) : (
-        tasks.map((task) => <TaskCard task={task} key={task.id} />)
+        tasks.map((task) => <TaskCard task={task} key={task.id} onSelect={onSelect} />)
       )}
     </Column>
   );
 };
 
-export default TaskColumn;
+export default memo(TaskColumn);
+

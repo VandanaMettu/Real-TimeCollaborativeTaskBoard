@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import useTasks from "../../hooks/useTasks";
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 
 export const FilterWrapper = styled.div`
   display: flex;
@@ -48,10 +48,11 @@ const TaskFilter = ({ filters, setFilters }) => {
   const [searchText, setSearchText] = useState(filters.search);
   const debounceRef = useRef();
 
-  // ✅ Assignee list
-  const assigneeList = [...new Set(state.tasks.map((t) => t.assignee))];
+  const assigneeList = useMemo(
+    () => [...new Set(state.tasks.map((t) => t.assignee))],
+    [state.tasks]
+  );
 
-  // ✅ Debounced search update
   if (!debounceRef.current) {
     debounceRef.current = debounce((value) => {
       setFilters((prev) => ({ ...prev, search: value }));
@@ -60,7 +61,6 @@ const TaskFilter = ({ filters, setFilters }) => {
 
   return (
     <FilterWrapper>
-      {/* ✅ Assignee Filter */}
       <Select
         value={filters.assignee}
         onChange={(e) =>
@@ -78,7 +78,6 @@ const TaskFilter = ({ filters, setFilters }) => {
         ))}
       </Select>
 
-      {/* ✅ Priority Filter */}
       <Select
         value={filters.priority}
         onChange={(e) =>
@@ -94,14 +93,13 @@ const TaskFilter = ({ filters, setFilters }) => {
         <option value="high">High</option>
       </Select>
 
-      {/* ✅ Search (debounced) */}
       <SearchInput
         placeholder="Search..."
         value={searchText}
         onChange={(e) => {
           const value = e.target.value;
-          setSearchText(value); // instant UI
-          debounceRef.current(value); // delayed filter update
+          setSearchText(value);
+          debounceRef.current(value);
         }}
       />
     </FilterWrapper>

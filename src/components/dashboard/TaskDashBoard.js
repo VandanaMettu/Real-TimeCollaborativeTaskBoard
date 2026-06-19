@@ -74,53 +74,6 @@ const TaskDashBoard = ({ filters }) => {
     { key: "done", title: "Done" },
   ];
 
-  // const handleDragEnd = async (event) => {
-  //   const { active, over } = event;
-
-  //   if (!over) return;
-
-  //   const taskId = active.id;
-  //   const newStatus = over.id;
-
-  //   const task = state.tasks.find((t) => t.id === taskId);
-  //   const prevStatus = task.status;
-
-  //   if (state.loadingTasks[taskId]) return;
-
-  //   dispatch({
-  //     type: "MOVE_TASK",
-  //     payload: { id: taskId, status: newStatus },
-  //   });
-
-  //   dispatch({
-  //     type: "SET_LOADING",
-  //     payload: { id: taskId, isLoading: true },
-  //   });
-
-  //   try {
-  //     await fakeUpdateTaskStatus(taskId, newStatus);
-
-  //     console.log("Success");
-  //   } catch (err) {
-  //     dispatch({
-  //       type: "ROLLBACK_TASK",
-  //       payload: { id: taskId, prevStatus },
-  //     });
-
-  //     dispatch({
-  //       type: "SET_ERROR",
-  //       payload: err,
-  //     });
-
-  //     console.log(" Failed → Rolled back");
-  //   } finally {
-  //     dispatch({
-  //       type: "SET_LOADING",
-  //       payload: { id: taskId, isLoading: false },
-  //     });
-  //   }
-  // };
-
   const handleDragEnd = async (event) => {
     const { active, over } = event;
     if (!over) return;

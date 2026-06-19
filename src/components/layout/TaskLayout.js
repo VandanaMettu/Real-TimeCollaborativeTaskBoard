@@ -67,21 +67,14 @@ const ToastNotification = styled.div`
   min-width: 280px;
   padding: 12px 16px;
   border-radius: 6px;
-  // font-family: sans-serif;
-  // font-size: 0.9rem;
-  // font-weight: 500;
+
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
   background-color: ${(props) =>
-    props.type === "success"
-      ? "#eff6ff"
-      : "#fef2f2"}; /* Soft Blue vs Soft Red */
-  color: ${(props) =>
-    props.type === "success"
-      ? "#1e40af"
-      : "#991b1b"}; /* Dark Blue vs Dark Red */
+    props.type === "success" ? "#eff6ff" : "#fef2f2"};
+  color: ${(props) => (props.type === "success" ? "#1e40af" : "#991b1b")};
   border-left: 4px solid
-    ${(props) => (props.type === "success" ? "#3b82f6" : "#ef4444")}; /* Bright Blue vs Bright Red */
+    ${(props) => (props.type === "success" ? "#3b82f6" : "#ef4444")};
 `;
 
 const LoadingOverlay = styled.div`
