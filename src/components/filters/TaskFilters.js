@@ -6,8 +6,10 @@ export const FilterWrapper = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 280px;
 `;
-
 export const Select = styled.select`
   padding: 6px 10px;
   border-radius: 6px;

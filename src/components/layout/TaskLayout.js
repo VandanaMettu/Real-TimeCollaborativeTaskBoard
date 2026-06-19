@@ -18,7 +18,7 @@ const Header = styled.div`
   color: white;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 16px 20px;
 `;
 
 const Content = styled.div`
@@ -42,9 +42,23 @@ const HeaderContent = styled.div`
   align-items: center;
   width: 100%;
   flex-wrap: wrap;
+
   h2 {
     margin: 0;
+    flex: 1 100%;
   }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 10px;
+  }
+`;
+
+const RightControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* helps responsiveness */
 `;
 
 const AddButton = styled.button`
@@ -120,8 +134,10 @@ const TaskLayout = () => {
       <Header>
         <HeaderContent>
           Task Manager
-          <AddButton onClick={() => setShowModal(true)}>+ Add Task</AddButton>
-          <TaskFilter filters={filters} setFilters={setFilters} />
+          <RightControls>
+            <AddButton onClick={() => setShowModal(true)}>+ Add Task</AddButton>
+            <TaskFilter filters={filters} setFilters={setFilters} />
+          </RightControls>
         </HeaderContent>
       </Header>
       {showModal && <TaskModal onClose={() => setShowModal(false)} />}
