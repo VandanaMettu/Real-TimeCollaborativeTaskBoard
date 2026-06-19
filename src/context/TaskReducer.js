@@ -13,18 +13,21 @@ export const initialState = {
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    //set loading icon
     case "IS_LOADING":
       return {
         ...state,
         isLoading: action.payload,
       };
 
+    //set notification
     case "SET_NOTIFICATION":
       return {
         ...state,
         notification: action.payload,
       };
 
+    //add task
     case "ADD_TASK":
       return {
         ...state,
@@ -32,6 +35,7 @@ export const reducer = (state, action) => {
         tasks: [...state.tasks, action.payload],
       };
 
+    //edit task
     case "EDIT_TASK":
       return {
         ...state,
@@ -44,6 +48,8 @@ export const reducer = (state, action) => {
             : task
         ),
       };
+
+    //update the task status
     case "SET_TASK_STATUS":
       return {
         ...state,

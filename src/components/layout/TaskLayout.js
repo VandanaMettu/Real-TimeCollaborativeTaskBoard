@@ -31,7 +31,7 @@ const Content = styled.div`
 
   @media (max-width: 768px) {
     &.split {
-      grid-template-columns: 1fr; /* disable split */
+      grid-template-columns: 1fr;
     }
   }
 `;
@@ -58,7 +58,7 @@ const RightControls = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap; /* helps responsiveness */
+  flex-wrap: wrap;
 `;
 
 const AddButton = styled.button`

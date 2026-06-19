@@ -19,8 +19,7 @@ const columns = [
 
 export const BoardWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* ✅ 3 columns */
-  gap: 16px;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 16px;
   height: 100%;
 `;

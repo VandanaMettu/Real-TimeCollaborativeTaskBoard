@@ -1,3 +1,4 @@
+//simulate API behaviour for the drag and drop task
 export const fakeUpdateTaskStatus = (taskId, newStatus) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -12,6 +13,7 @@ export const fakeUpdateTaskStatus = (taskId, newStatus) => {
   });
 };
 
+//simulate API behaviour for the adding task
 export const fakeAddTask = (taskData) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -31,6 +33,7 @@ export const fakeAddTask = (taskData) => {
   });
 };
 
+//simulate API behaviour for the edit/update task
 export const fakeEditTask = (taskId, updatedTask) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
