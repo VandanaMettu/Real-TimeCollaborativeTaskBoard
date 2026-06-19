@@ -18,8 +18,8 @@ import { useRef } from "react";
 
 const TaskCard = ({ task }) => {
   const { state, dispatch } = useTasks();
-  const isDraggingRef = useRef(false);
-  const isLoading = state.loadingTasks[task.id];
+  // const isDraggingRef = useRef(false);
+  // const isLoading = state.loadingTasks[task.id];
 
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task.id,
@@ -47,7 +47,6 @@ const TaskCard = ({ task }) => {
       <small>
         {task.assignee} • {task.priority}
       </small>
-      {isLoading && <span>Updating...</span>}
     </Card>
   );
 };

@@ -59,6 +59,47 @@ const AddButton = styled.button`
     background: #4338ca;
   }
 `;
+const ToastNotification = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  min-width: 280px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  // font-family: sans-serif;
+  // font-size: 0.9rem;
+  // font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  background-color: ${(props) =>
+    props.type === "success"
+      ? "#eff6ff"
+      : "#fef2f2"}; /* Soft Blue vs Soft Red */
+  color: ${(props) =>
+    props.type === "success"
+      ? "#1e40af"
+      : "#991b1b"}; /* Dark Blue vs Dark Red */
+  border-left: 4px solid
+    ${(props) => (props.type === "success" ? "#3b82f6" : "#ef4444")}; /* Bright Blue vs Bright Red */
+`;
+
+const LoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+  font-family: sans-serif;
+`;
 
 const TaskLayout = () => {
   const { state } = useTasks();
@@ -72,6 +113,17 @@ const TaskLayout = () => {
 
   return (
     <Container>
+      {state.isLoading && (
+        <LoadingOverlay>
+          <div>Saving Changes...</div>
+        </LoadingOverlay>
+      )}
+
+      {state.notification && (
+        <ToastNotification type={state.notification.type}>
+          {state.notification.message}
+        </ToastNotification>
+      )}
       <Header>
         <HeaderContent>
           Task Manager

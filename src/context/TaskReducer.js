@@ -3,69 +3,35 @@ import { mockTasks } from "../data/MockData";
 const storedTasks = JSON.parse(localStorage.getItem("tasks") || "null");
 
 export const initialState = {
-  tasks: storedTasks || mockTasks,
+  tasks: storedTasks && storedTasks.length > 0 ? storedTasks : mockTasks,
   selectedTask: null,
-  loadingTasks: {},
-  backupTasks: null,
+  isLoading: false,
+  notification: null,
+  lockedTaskId: null,
+  lockedBy: null,
 };
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    //  Add new task
+    case "IS_LOADING":
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
+
+    case "SET_NOTIFICATION":
+      return {
+        ...state,
+        notification: action.payload,
+      };
+
     case "ADD_TASK":
       return {
         ...state,
-        tasks: [
-          ...state.tasks,
-          {
-            ...action.payload,
-            id: Date.now().toString(),
-            status: action.payload.status || "Todo",
-            createdAt: new Date().toISOString(),
-          },
-        ],
+        // action.payload is now the final 'serverSavedTask' from the API
+        tasks: [...state.tasks, action.payload],
       };
 
-    //when drag fails
-    case "ROLLBACK_TASK":
-      return {
-        ...state,
-        tasks: state.tasks.map((task) =>
-          task.id === action.payload.id
-            ? { ...task, status: action.payload.prevStatus }
-            : task
-        ),
-      };
-
-    //loading state after operation
-    case "SET_LOADING":
-      return {
-        ...state,
-        loadingTasks: {
-          ...state.loadingTasks,
-          [action.payload.id]: action.payload.isLoading,
-        },
-      };
-
-    // error message
-    case "SET_ERROR":
-      return {
-        ...state,
-        error: action.payload,
-      };
-
-    //Move task (update status)
-    case "MOVE_TASK":
-      return {
-        ...state,
-        tasks: state.tasks.map((task) =>
-          task.id === action.payload.id
-            ? { ...task, status: action.payload.status }
-            : task
-        ),
-      };
-
-    //  Edit task (update ANY field)
     case "EDIT_TASK":
       return {
         ...state,
@@ -73,9 +39,18 @@ export const reducer = (state, action) => {
           task.id === action.payload.id
             ? {
                 ...task,
-                ...action.payload.updates,
+                ...action.payload.updatedTask,
               }
             : task
+        ),
+      };
+    case "SET_TASK_STATUS":
+      return {
+        ...state,
+        tasks: state.tasks.map((t) =>
+          t.id === action.payload.id
+            ? { ...t, status: action.payload.status }
+            : t
         ),
       };
 

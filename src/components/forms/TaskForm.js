@@ -63,7 +63,7 @@ const initialFormState = {
 };
 
 const TaskForm = ({ onClose }) => {
-  const { state, dispatch } = useTasks();
+  const { state, dispatch, editTaskAsync, addTaskAsync } = useTasks();
 
   const [formData, setFormData] = useState(initialFormState);
 
@@ -80,22 +80,13 @@ const TaskForm = ({ onClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (state.selectedTask) {
-      dispatch({
-        type: "EDIT_TASK",
-        payload: {
-          id: state.selectedTask.id,
-          updates: formData,
-        },
-      });
+      await editTaskAsync(state.selectedTask.id, formData);
     } else {
-      dispatch({
-        type: "ADD_TASK",
-        payload: formData,
-      });
+      await addTaskAsync(formData);
     }
     if (onClose) {
       onClose();
